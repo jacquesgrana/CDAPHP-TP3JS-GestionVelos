@@ -29,7 +29,7 @@ export default class Model {
             return res.json();
         })
         .then(data => {
-            console.log("data :", data);
+            //console.log("data :", data);
             this.#bikes = data;
             displayBikes(this.#bikes);
         })

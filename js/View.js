@@ -2,7 +2,9 @@ import { createMarkup } from "./utils/dom.js";
 
 export default class View {
   selectType;
-  constructor() {}
+  constructor(controller) {
+    this.controller = controller;
+  }
 
   render() {
     const rootDocument = document.getElementById("root");
@@ -19,12 +21,12 @@ export default class View {
     ]);
     this.selectType = createMarkup("select", "", formFilters, [
       { class: "mb-1" },
-      { onsubmit: this.calcFilter() },
+      { onsubmit: (event) => this.calcFilter(event) }
     ]);
     const btnFilter = createMarkup("button", "Filtrer", formFilters, [
-      { class: "btn btn-warning" },
-      { type: "submit" },
+      { class: "btn btn-warning" }
     ]);
+    btnFilter.addEventListener("click", (event) => this.calcFilter(event));
     this.divRow = createMarkup("div", "", rootDocument, [
       { class: "row my-2 " },
     ]);
@@ -103,7 +105,9 @@ export default class View {
     document.body.classList.remove("modal-open");
   }
 
-  calcFilter() {
-    
+   calcFilter(event) {
+    event.preventDefault();
+    console.log("clic filtrer");
+    this.controller.calcFilter();
   }
 }

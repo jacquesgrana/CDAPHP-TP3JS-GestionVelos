@@ -3,18 +3,19 @@ import Model from "./Model.js";
 import View from "./View.js";
 
 export default class Controller {
-  model = new Model();
-  view = new View();
-
+  model;
+  view;
   divRow;
+  constructor() {
+    this.model = new Model();
+    this.view = new View(this);
+  }
 
   run() {
     this.view.render();
-
     this.model.types.forEach((t) => {
       this.view.renderOptionSelectType(t);
     });
-
     this.model.getBikesFromServer(this.displayBikes);
     this.view.attachModalEventHandlers();
   }
@@ -25,5 +26,9 @@ export default class Controller {
       this.view.renderBike(b);
     });
     this.view.attachModelEventHandlerEditButtons();
+  }
+
+  calcFilter() {
+    console.log("calcul du filtrage");
   }
 }
