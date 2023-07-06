@@ -39,6 +39,16 @@ export default class Controller {
 
   calcFilter() {
     console.log("calcul du filtrage");
+    const filterChoice = document.getElementById("select-filters").value;
+    console.log("select value :", filterChoice);
+
+    if(filterChoice == "All") {
+      this.displayBikes(this.model.bikes);
+    }
+    else {
+      const filteredList = this.model.bikes.filter(b => b.type == filterChoice);
+      this.displayBikes(filteredList);
+    }
   }
 
   displaySelectSizes() {

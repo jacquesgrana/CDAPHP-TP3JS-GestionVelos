@@ -20,7 +20,7 @@ export default class View {
       { class: "mt-4 d-flex gap-4" },
     ]);
     this.selectType = createMarkup("select", "", formFilters, [
-      { class: "mb-1" },
+      { class: "mb-1" }, {id: "select-filters"},
       { onsubmit: (event) => this.calcFilter(event) }
     ]);
     this.optionAll = createMarkup("option", "Tous", this.selectType, [{value: "All"}]);
