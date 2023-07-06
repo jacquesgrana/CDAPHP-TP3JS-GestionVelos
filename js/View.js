@@ -2,6 +2,7 @@ import { createMarkup } from "./utils/dom.js";
 
 export default class View {
   selectType;
+  modalMode;
   constructor(controller) {
     this.controller = controller;
   }
@@ -35,7 +36,7 @@ export default class View {
 
   renderBike(b) {
     const article = createMarkup("article", "", this.divRow, [
-      { class: "col-md-4 col-sm-6 col-12 p-2 card border-0" },
+      { class: "col-md-4 col-sm-6 col-12 p-2 card border-0"},
       { style: "box-sizing: border-box" },
     ]);
     const divCard = createMarkup("div", "", article, [
@@ -90,9 +91,11 @@ export default class View {
     const showModalButton = document.getElementById("showModalBtn");
     const closeModalButton = document.getElementById("closeModalBtn");
     const closeButton = document.getElementById("xModalBtn");
+    const saveButton = document.getElementById("saveModalBtn");
     showModalButton.addEventListener("click", this.showModalAdd);
     closeModalButton.addEventListener("click", this.hideModal);
     closeButton.addEventListener("click", this.hideModal);
+    saveButton.addEventListener("click", this.saveModal);
   }
 
   attachModelEventHandlerEditButtons() {
@@ -122,6 +125,7 @@ export default class View {
   }
 
   showModalAdd = (event) => {
+    this.modalMode = "Add";
     event.preventDefault();
     //this.controller.displaySelectTypes();
     //this.controller.displaySelectSizes();
@@ -133,6 +137,7 @@ export default class View {
   }
 
   showModalEdit = (event) => {
+    this.modalMode = "Edit";
     event.preventDefault();
     const element = event.target;
     //this.controller.displaySelectTypes();
@@ -142,6 +147,19 @@ export default class View {
     modal.style.display = "block";
     document.body.classList.add("modal-open");
     this.controller.fillFormModal(element);
+  }
+
+  saveModal = (event) => {
+    if(this.modalMode == "Add") {
+      // faire requete dans model pour ajouter vélo
+      console.log("clic save avec add");
+      
+    }
+    else if(this.modalMode == "Edit") {
+      // faire requete dans model pour update vélo
+      console.log("clic save avec edit");
+    }
+    this.hideModal();
   }
 
   hideModal() {
