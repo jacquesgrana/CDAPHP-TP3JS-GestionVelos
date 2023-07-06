@@ -16,6 +16,9 @@ export default class Controller {
     this.model.types.forEach((t) => {
       this.view.renderOptionSelectType(t);
     });
+    this.model.sizes.forEach((s) => {
+      this.view.renderOptionSelectSize(s);
+    });
     this.model.getBikesFromServer(this.displayBikes);
     this.view.attachModalEventHandlers();
   }
@@ -30,5 +33,13 @@ export default class Controller {
 
   calcFilter() {
     console.log("calcul du filtrage");
+  }
+
+  displaySelectSizes() {
+    this.model.sizes.forEach(s => this.view.renderOptionSelectSize(s));
+  }
+
+  displaySelectTypes() {
+    this.model.types.forEach(s => this.view.renderOptionSelectTypeModal(s));
   }
 }

@@ -28,17 +28,43 @@
         </div>
 
         <div class="modal-body">
-          <form>
-            <h5 id="model">Modèle</h5>
-            <h6 id="brand">Marque</h6>
-            <h6 id="type">Type</h6>
-            <h6 id="size">Taille</h6>
-            <h6 id="price">Prix</h6>
+          <form class="d-flex flex-column justify-content-center align-content-start">
+            <div>
+              <label for="model">
+                <h5>Modèle :</h5>
+              </label>
+              <input id="model" name="model" type="text">
+            </div>
+            <div>
+              <label for="brand">
+                <h6>Marque :</h6>
+              </label>
+              <input id="brand" name="brand" type="text">
+            </div>
+            <div>
+              <label for="type">
+                <h6>Type :</h6>
+              </label>
+              <select id="select-type" name="type">
+              </select>
+            </div>
+            <div>
+              <label for="size">
+                <h6>Taille :</h6>
+              </label>
+              <select id="select-size" name="size">
+              </select>
+            </div>
+            <div>
+              <label for="price">
+                <h6>Prix :</h6>
+              </label>
+              <input id="price" name="price" type="number">
+            </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" id="closeModalBtn" class="btn btn-danger" data-dismiss="modal">Close</button>
-
           <button type="button" class="btn btn-success">Save changes</button>
         </div>
 

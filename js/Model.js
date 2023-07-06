@@ -2,9 +2,11 @@ export default class Model {
 
     #bikes;
     #types;
+    #sizes;
     constructor() {
         this.#bikes=[];
         this.#types=["Tous", "VTT", "VTC", "COURSE", "BMX", "CROSS"];
+        this.#sizes=["VSM", "SM", "M", "L", "XL", "XXL"];
     }
 
     get bikes() {
@@ -23,6 +25,14 @@ export default class Model {
         this.#types = new_types;
     }
 
+    get sizes() {
+        return this.#sizes;
+    }
+
+    set sizes(new_sizes) {
+        this.#sizes = new_sizes;
+    }
+
     getBikesFromServer(displayBikes) {
         fetch("http://localhost:3000/bikes")
         .then(res => {
@@ -35,6 +45,6 @@ export default class Model {
         })
         .catch(err => {
             console.error("erreur attrapée :", err);
-        })
+        });
     }
 }

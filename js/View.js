@@ -36,6 +36,16 @@ export default class View {
     createMarkup("option", t, this.selectType, [{ value: t }]);
   }
 
+  renderOptionSelectTypeModal(t) {
+    const selectTypes = document.getElementById("select-type");
+    createMarkup("option", t, selectTypes, [{ value: t }]);
+  }
+
+  renderOptionSelectSize(s) {
+    const selectSizes = document.getElementById("select-size");
+    createMarkup("option", s, selectSizes, [{ value: s }]);
+  }
+
   renderBike(b) {
     const article = createMarkup("article", "", this.divRow, [
       { class: "col-4 p-2 card border-0" },
@@ -78,7 +88,7 @@ export default class View {
     const showModalButton = document.getElementById("showModalBtn");
     const closeModalButton = document.getElementById("closeModalBtn");
     const closeButton = document.getElementById("xModalBtn");
-    showModalButton.addEventListener("click", this.showModal);
+    showModalButton.addEventListener("click", this.showModalAdd);
     closeModalButton.addEventListener("click", this.hideModal);
     closeButton.addEventListener("click", this.hideModal);
   }
@@ -86,11 +96,20 @@ export default class View {
   attachModelEventHandlerEditButtons() {
     const editButtons = document.getElementsByClassName("btn-edit-bike");
     Array.from(editButtons).forEach((b) =>
-      b.addEventListener("click", this.showModal)
+      b.addEventListener("click", this.showModalEdit)
     );
   }
 
-  showModal(event) {
+  showModalAdd = (event) => {
+    event.preventDefault();
+    this.controller.displaySelectTypes();
+    const modal = document.getElementById("modal-container");
+    modal.classList.add("show");
+    modal.style.display = "block";
+    document.body.classList.add("modal-open");
+  }
+
+  showModalEdit(event) {
     event.preventDefault();
     const modal = document.getElementById("modal-container");
     modal.classList.add("show");
