@@ -35,7 +35,7 @@ export default class View {
 
   renderBike(b) {
     const article = createMarkup("article", "", this.divRow, [
-      { class: "col-4 p-2 card border-0" },
+      { class: "col-md-4 col-sm-6 col-12 p-2 card border-0" },
       { style: "box-sizing: border-box" },
     ]);
     const divCard = createMarkup("div", "", article, [
