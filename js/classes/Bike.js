@@ -15,6 +15,17 @@ export default class Bike {
         this.#price = price;
     }
 
+    equals(bike) {
+        if((this.#id == bike.id) && (this.#model == bike.model) 
+        && (this.#brand == bike.brand) && (this.#type == bike.type) 
+        && (this.#size == bike.size) && (this.#price == bike.price)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     get id() {
         return this.#id;
     }
