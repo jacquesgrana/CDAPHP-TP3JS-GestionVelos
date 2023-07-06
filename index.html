@@ -33,13 +33,13 @@
               <label for="model">
                 <h5>Modèle :</h5>
               </label>
-              <input id="model" name="model" type="text">
+              <input id="modelModal" name="model" type="text">
             </div>
             <div>
               <label for="brand">
                 <h6>Marque :</h6>
               </label>
-              <input id="brand" name="brand" type="text">
+              <input id="brandModal" name="brand" type="text">
             </div>
             <div>
               <label for="type">
@@ -59,11 +59,17 @@
               <label for="price">
                 <h6>Prix :</h6>
               </label>
-              <input id="price" name="price" type="number">
+              <input id="priceModal" name="price" type="number">
+            </div>
+            <div>
+              <label for="id">
+                <h6>Id :</h6>
+              </label>
+              <input id="idModal" name="id" type="number" disabled="disabled">
             </div>
           </form>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-between">
           <button type="button" id="closeModalBtn" class="btn btn-danger" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-success">Save changes</button>
         </div>
@@ -71,29 +77,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Modal content 
-
-  <script>
-    function showModal() {
-      const modal = document.getElementById("exampleModalCenter");
-      modal.classList.add("show");
-      modal.style.display = "block";
-      document.body.classList.add("modal-open");
-    }
-
-    function hideModal() {
-      const modal = document.getElementById("exampleModalCenter");
-      modal.classList.remove("show");
-      modal.style.display = "none";
-      document.body.classList.remove("modal-open");
-    }
-
-    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
-    document.getElementById("xModalBtn").addEventListener("click", hideModal);
-  </script>
--->
-
   <script src="./js/app.js" type="module"></script>
 </body>
 
