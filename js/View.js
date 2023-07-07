@@ -1,21 +1,27 @@
 import { createMarkup } from "./utils/dom.js";
 
+/**
+ * Vue
+ */
 export default class View {
   selectType;
-  modalMode;
+  //modalMode;
   constructor(controller) {
     this.controller = controller;
   }
 
+  /**
+   * Méthode qui affiche l'application
+   */
   render() {
     const rootDocument = document.getElementById("root");
     const h1 = createMarkup("h1", "Gestion des Vélos", rootDocument, [
-      { class: "h1 my-5" },
+      { class: "h1 my-5 pt-5" },
     ]);
     const btnAdd = createMarkup("button", "Ajouter un vélo", rootDocument, [
       { type: "button" },
       { id: "showModalBtn" },
-      { class: "btn btn-success mb-1" },
+      { class: "btn btn-success mb-1 border border-secondary " },
     ]);
     const formFilters = createMarkup("form", "", rootDocument, [
       { class: "mt-4 d-flex gap-4" },
@@ -29,14 +35,18 @@ export default class View {
       { value: "All" },
     ]);
     const btnFilter = createMarkup("button", "Filtrer", formFilters, [
-      { class: "btn btn-warning" },
+      { class: "btn btn-warning border border-secondary" },
     ]);
     btnFilter.addEventListener("click", (event) => this.calcFilter(event));
     this.divRow = createMarkup("div", "", rootDocument, [
-      { class: "row my-2 w-100" },
+      { class: "row my-2 w-100" }, { id: "row-bikes"}
     ]);
   }
 
+  /**
+   * Méthode qui affiche un vélo
+   * @param {Bike} b : Vélo à afficher.
+   */
   renderBike(b) {
     const article = createMarkup("article", "", this.divRow, [
       { class: "col-lg-4 col-md-6 col-sm-12 p-2 card border-0 col-centered" },
@@ -45,7 +55,7 @@ export default class View {
     const divCard = createMarkup("div", "", article, [
       {
         class:
-          "w-auto border border-primary card-body d-flex flex-column justify-content-center align-items-center rounded",
+          "w-auto border border-secondary card-body d-flex flex-column justify-content-center align-items-center rounded",
       },
     ]);
     const h2Model = createMarkup("h2", b.model, divCard, [
@@ -72,27 +82,42 @@ export default class View {
       { style: "width:100%" },
     ]);
     const btnSuppr = createMarkup("button", "Supprimer", divButtons, [
-      { class: "btn btn-danger btn-delete-bike mb-1" },
+      { class: "btn btn-danger btn-delete-bike mb-1 border border-secondary" },
     ]);
     const btnEdit = createMarkup("button", "Editer", divButtons, [
-      { class: "btn btn-primary btn-edit-bike" },
+      { class: "btn btn-primary btn-edit-bike border border-secondary" },
     ]);
   }
 
+  /**
+   * Méthode qui affiche un select des types.
+   * @param {String} t : type à afficher.
+   */
   renderOptionSelectType(t) {
     createMarkup("option", t, this.selectType, [{ value: t }]);
   }
 
+  /**
+   * Méthode qui affiche un select des types pour la modale.
+   * @param {String} t : type à afficher.
+   */
   renderOptionSelectTypeModal(t) {
     const selectTypes = document.getElementById("select-type");
     createMarkup("option", t, selectTypes, [{ value: t }]);
   }
 
+  /**
+   * Méthode qui affiche un select des tailles pour la modale.
+   * @param {String} s : taille à afficher.
+   */
   renderOptionSelectSizeModal(s) {
     const selectSizes = document.getElementById("select-size");
     createMarkup("option", s, selectSizes, [{ value: s }]);
   }
 
+  /**
+   * Gestion des listeners des boutons.
+   */
   attachModalEventHandlers() {
     const showModalButton = document.getElementById("showModalBtn");
     const closeModalButton = document.getElementById("closeModalBtn");
@@ -104,6 +129,9 @@ export default class View {
     saveButton.addEventListener("click", this.saveModal);
   }
 
+  /**
+   * Gestion des listeners des boutons "Editer" des cards des vélos.
+   */
   attachModelEventHandlerEditButtons() {
     const editButtons = document.getElementsByClassName("btn-edit-bike");
     Array.from(editButtons).forEach((b) =>
@@ -111,6 +139,9 @@ export default class View {
     );
   }
 
+  /**
+   * Gestion des listeners des boutons "Supprimer" des cards des vélos.
+   */
   attachModelEventHandlerDeleteButtons() {
     const deleteButtons = document.getElementsByClassName("btn-delete-bike");
     Array.from(deleteButtons).forEach((b) =>
@@ -118,6 +149,10 @@ export default class View {
     );
   }
 
+  /**
+   * Méthode qui appelle la suppression d'un vélo par le controller.
+   * @param {event} event : événement déclencheur.
+   */
   deleteBike = (event) => {
     console.log("delete bike de view");
     event.preventDefault();
@@ -130,6 +165,10 @@ export default class View {
     }
   };
 
+  /**
+   * Méthode qui affiche la modale pour l'ajout d'un vélo.
+   * @param {event} event : événement déclencheur.
+   */
   showModalAdd = (event) => {
     this.modalMode = "Add";
     event.preventDefault();
@@ -142,6 +181,10 @@ export default class View {
     this.emptyFormModal();
   };
 
+  /**
+   * Méthode qui affiche la modale pour la modification d'un vélo.
+   * @param {event} event : événement déclencheur.
+   */
   showModalEdit = (event) => {
     this.modalMode = "Edit";
     event.preventDefault();
@@ -155,12 +198,14 @@ export default class View {
     this.controller.fillFormModal(element);
   };
 
+  /**
+   * Méthode qui récupère les valeurs des champs du formulaire de la modale et appelle le controleur pour appliquer l'jout ou la modification d'un vélo.
+   * @param {event} event : événement déclencheur.
+   */
   saveModal = (event) => {
     if (this.modalMode == "Add") {
       console.log("clic save avec add");
       if (window.confirm("Voulez-vous vraiment créer ce vélo ?")) {
-        console.log("appel controller");
-        // recuperer donnees du formulaire
         const modelInputModal = document.getElementById("modelModal").value;
         const brandInputModal = document.getElementById("brandModal").value;
         const typeSelectModal = document.getElementById("select-type").value;
@@ -173,16 +218,10 @@ export default class View {
           size: sizeSelectModal,
           price: priceInputModal,
         };
-        console.log("bike : ", data);
-
-        // faire requete dans model pour ajouter vélo : appeler controller
         this.controller.addBike(data);
       }
     } else if (this.modalMode == "Edit") {
-      // faire requete dans model pour update vélo : appeler controller
-      console.log("clic save avec edit");
       if (window.confirm("Voulez-vous vraiment modifier ce vélo ?")) {
-        console.log("appel controller");
         const idInputModal = document.getElementById("idModal").value;
         const modelInputModal = document.getElementById("modelModal").value;
         const brandInputModal = document.getElementById("brandModal").value;
@@ -197,13 +236,15 @@ export default class View {
           size: sizeSelectModal,
           price: priceInputModal,
         };
-        console.log("bike : ", data);
         this.controller.updateBike(data);
       }
     }
     this.hideModal();
   };
 
+  /**
+   * Méthode qui ferme la modale.
+   */
   hideModal() {
     const modal = document.getElementById("modal-container");
     modal.classList.remove("show");
@@ -211,6 +252,10 @@ export default class View {
     document.body.classList.remove("modal-open");
   }
 
+  /**
+   * Méthode qui remplie le formulaire de la modale avec les valeurs de bike.
+   * @param {Bike} bike 
+   */
   fillFormModal(bike) {
     const titleModal = document.getElementById("modal-title");
     titleModal.innerText = "Editer un vélo";
@@ -231,6 +276,9 @@ export default class View {
     idInputModal.value = bike.id;
   }
 
+  /**
+   * Méthode qui vide les champs du formulaire de la modale.
+   */
   emptyFormModal() {
     const titleModal = document.getElementById("modal-title");
     titleModal.innerText = "Ajouter un vélo";
@@ -251,13 +299,19 @@ export default class View {
     idInputModal.value = "";
   }
 
+  /**
+   * Efface le contenu HTML de la div contenant l'affichage des vélos.
+   */
   emptyBikesContainer() {
     this.divRow.innerHTML = "";
   }
 
+  /**
+   * Méthode qui appelle le controleur pour appliquer le filtre.
+   * @param {event} event 
+   */
   calcFilter(event) {
     event.preventDefault();
-    console.log("clic filtrer");
     this.controller.calcFilter();
   }
 }

@@ -1,14 +1,20 @@
+/**
+ * Modèle
+ */
 export default class Model {
-  #bikes;
-  #types;
-  #sizes;
-  constructor(controller) {
+  #bikes; // tableau des vélos renvoyés par la bdd.
+  #types; // tableau des types de vélos.
+  #sizes; // tableau des tailles de vélos.
+
+  constructor() {
     this.#bikes = [];
     this.#types = ["VTT", "VTC", "COURSE", "BMX", "CROSS"];
     this.#sizes = ["VSM", "SM", "M", "L", "XL", "XXL"];
-    this.controller = controller;
   }
 
+  /**
+   * Getters et Setters.
+   */
   get bikes() {
     return this.#bikes;
   }
@@ -33,13 +39,18 @@ export default class Model {
     this.#sizes = new_sizes;
   }
 
+  /**
+   * Méthode qui envoie une requête au serveur pour récupérer les vélos dans la bdd, puis lance la callback pour les afficher.
+   * @param {callback} displayBikes 
+   */
   getBikesFromServer(displayBikes) {
-    fetch("http://localhost:3000/bikes")
+    fetch("http://localhost:3000/bikes", {
+        method: "GET",
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        //console.log("data :", data);
         this.#bikes = data;
         displayBikes(this.#bikes);
       })
@@ -48,31 +59,30 @@ export default class Model {
       });
   }
 
+  /**
+   * Méthode qui envoie une requête au serveur pour effacer un vélo dans la bdd selon son id, puis lance la callback pour les afficher.
+   * @param {callback} displayBikes 
+   */
   deleteBikeFromServer(id, displayBikes) {
     fetch(`http://localhost:3000/bikes/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
         if (response.ok) {
-          console.log("L'élément a été supprimé avec succès.");
-          // Effectuer d'autres actions après la suppression
-          //this.getBikesFromServer(this.controller.displayBikes);
           this.getBikesFromServer(displayBikes);
         } else {
-          console.log(
-            "Une erreur s'est produite lors de la suppression de l'élément."
-          );
-          // Gérer l'erreur de suppression
+          console.log("Une erreur s'est produite lors de la suppression de l'élément");
         }
       })
       .catch((error) => {
-        console.error(
-          "Une erreur s'est produite lors de la suppression de l'élément:",
-          error
-        );
+        console.error("Une erreur s'est produite lors de la suppression de l'élément:", error);
       });
   }
 
+  /**
+   * Méthode qui envoie une requête au serveur pour ajouter un vélo dans la bdd, puis lance la callback pour les afficher.
+   * @param {callback} displayBikes 
+   */
   addBikeFromServer(bikeToAdd, displayBikes) {
     fetch("http://localhost:3000/bikes", {
       method: "POST",
@@ -83,7 +93,6 @@ export default class Model {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("New data added:", data);
         this.getBikesFromServer(displayBikes);
       })
       .catch((error) => {
@@ -91,6 +100,10 @@ export default class Model {
       });
   }
 
+  /**
+   * Méthode qui envoie une requête au serveur pour modifier un vélo dans la bdd selon son id, puis lance la callback pour les afficher.
+   * @param {callback} displayBikes 
+   */
   updateBikeFromServer(bikeToUpdate, displayBikes) {
     fetch(`http://localhost:3000/bikes/${bikeToUpdate.id}`, {
       method: "PUT", // or 'PATCH' for partial updates
@@ -101,7 +114,6 @@ export default class Model {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data updated:", data);
         this.getBikesFromServer(displayBikes);
       })
       .catch((error) => {

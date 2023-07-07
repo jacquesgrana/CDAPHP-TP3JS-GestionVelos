@@ -1,3 +1,6 @@
+/**
+ * Classe qui représente un vélo.
+ */
 export default class Bike {
     #id;
     #model;
@@ -14,7 +17,11 @@ export default class Bike {
         this.#size = size;
         this.#price = price;
     }
-
+    /**
+     * Fonction de comparaison.
+     * @param {Bike} bike : vélo à comparer.
+     * @returns vrai si toutes les propriétés sont égales, faux sinon.
+     */
     equals(bike) {
         if((this.#id == bike.id) && (this.#model == bike.model) 
         && (this.#brand == bike.brand) && (this.#type == bike.type) 
@@ -26,6 +33,9 @@ export default class Bike {
         }
     }
 
+    /**
+     * Getters et Setters.
+     */
     get id() {
         return this.#id;
     }

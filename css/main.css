@@ -1,5 +1,24 @@
+body,
+article {
+  background-color: rgb(176, 198, 228) !important;
+}
+
+.card-body {
+  background-color: white;
+}
+
 .col-centered {
-    float: none;
-    margin-right: auto;
-    margin-left: auto;
-  }
+  float: none;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.border-secondary {
+    border-color: black;
+}
+
+#row-bikes {
+    max-width: 1200px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
