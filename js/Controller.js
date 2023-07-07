@@ -81,4 +81,12 @@ export default class Controller {
     //this.model.bikes.splice(id, 1);
     console.log("delete bike à l'id :", idDb);
   }
+
+  addBike(bikeToAdd) {
+    this.model.addBikeFromServer(bikeToAdd, this.displayBikes);
+  }
+
+  updateBike(bikeToAdd) {
+    this.model.updateBikeFromServer(bikeToAdd, this.displayBikes);
+  }
 }

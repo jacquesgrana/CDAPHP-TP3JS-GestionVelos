@@ -15,34 +15,37 @@ export default class View {
     const btnAdd = createMarkup("button", "Ajouter un vélo", rootDocument, [
       { type: "button" },
       { id: "showModalBtn" },
-      { class: "btn btn-success mb-1" }
+      { class: "btn btn-success mb-1" },
     ]);
     const formFilters = createMarkup("form", "", rootDocument, [
       { class: "mt-4 d-flex gap-4" },
     ]);
     this.selectType = createMarkup("select", "", formFilters, [
-      { class: "mb-1" }, {id: "select-filters"},
-      { onsubmit: (event) => this.calcFilter(event) }
+      { class: "mb-1" },
+      { id: "select-filters" },
+      { onsubmit: (event) => this.calcFilter(event) },
     ]);
-    this.optionAll = createMarkup("option", "Tous", this.selectType, [{value: "All"}]);
+    this.optionAll = createMarkup("option", "Tous", this.selectType, [
+      { value: "All" },
+    ]);
     const btnFilter = createMarkup("button", "Filtrer", formFilters, [
-      { class: "btn btn-warning" }
+      { class: "btn btn-warning" },
     ]);
     btnFilter.addEventListener("click", (event) => this.calcFilter(event));
     this.divRow = createMarkup("div", "", rootDocument, [
-      { class: "row my-2 " },
+      { class: "row my-2 w-100" },
     ]);
   }
 
   renderBike(b) {
     const article = createMarkup("article", "", this.divRow, [
-      { class: "col-md-4 col-sm-6 col-12 p-2 card border-0"},
+      { class: "col-lg-4 col-md-6 col-sm-12 p-2 card border-0 col-centered" },
       { style: "box-sizing: border-box" },
     ]);
     const divCard = createMarkup("div", "", article, [
       {
         class:
-          "border border-primary card-body d-flex flex-column justify-content-center align-items-center rounded",
+          "w-auto border border-primary card-body d-flex flex-column justify-content-center align-items-center rounded",
       },
     ]);
     const h2Model = createMarkup("h2", b.model, divCard, [
@@ -60,7 +63,10 @@ export default class View {
     const h4Price = createMarkup("h4", b.price + "€", divCard, [
       { class: "h4 card-text" },
     ]);
-    const pId = createMarkup("p", "#" + b.id, divCard, [{style: "visibility: hidden"} ,{class: "m-0"}])
+    const pId = createMarkup("p", "#" + b.id, divCard, [
+      { style: "visibility: hidden" },
+      { class: "m-0" },
+    ]);
     const divButtons = createMarkup("div", "", divCard, [
       { class: "d-flex justify-content-between" },
       { style: "width:100%" },
@@ -113,7 +119,7 @@ export default class View {
   }
 
   deleteBike = (event) => {
-    console.log("delete bike de view")
+    console.log("delete bike de view");
     event.preventDefault();
     if (window.confirm("Voulez-vous vraiment supprimer ce vélo ?")) {
       console.log("delete : ok");
@@ -122,7 +128,7 @@ export default class View {
       console.log("delete : ko");
       this.hideModal();
     }
-  }
+  };
 
   showModalAdd = (event) => {
     this.modalMode = "Add";
@@ -134,7 +140,7 @@ export default class View {
     modal.style.display = "block";
     document.body.classList.add("modal-open");
     this.emptyFormModal();
-  }
+  };
 
   showModalEdit = (event) => {
     this.modalMode = "Edit";
@@ -147,20 +153,56 @@ export default class View {
     modal.style.display = "block";
     document.body.classList.add("modal-open");
     this.controller.fillFormModal(element);
-  }
+  };
 
   saveModal = (event) => {
-    if(this.modalMode == "Add") {
-      // faire requete dans model pour ajouter vélo
+    if (this.modalMode == "Add") {
       console.log("clic save avec add");
-      
-    }
-    else if(this.modalMode == "Edit") {
-      // faire requete dans model pour update vélo
+      if (window.confirm("Voulez-vous vraiment créer ce vélo ?")) {
+        console.log("appel controller");
+        // recuperer donnees du formulaire
+        const modelInputModal = document.getElementById("modelModal").value;
+        const brandInputModal = document.getElementById("brandModal").value;
+        const typeSelectModal = document.getElementById("select-type").value;
+        const sizeSelectModal = document.getElementById("select-size").value;
+        const priceInputModal = document.getElementById("priceModal").value;
+        const data = {
+          model: modelInputModal,
+          brand: brandInputModal,
+          type: typeSelectModal,
+          size: sizeSelectModal,
+          price: priceInputModal,
+        };
+        console.log("bike : ", data);
+
+        // faire requete dans model pour ajouter vélo : appeler controller
+        this.controller.addBike(data);
+      }
+    } else if (this.modalMode == "Edit") {
+      // faire requete dans model pour update vélo : appeler controller
       console.log("clic save avec edit");
+      if (window.confirm("Voulez-vous vraiment modifier ce vélo ?")) {
+        console.log("appel controller");
+        const idInputModal = document.getElementById("idModal").value;
+        const modelInputModal = document.getElementById("modelModal").value;
+        const brandInputModal = document.getElementById("brandModal").value;
+        const typeSelectModal = document.getElementById("select-type").value;
+        const sizeSelectModal = document.getElementById("select-size").value;
+        const priceInputModal = document.getElementById("priceModal").value;
+        const data = {
+          id: idInputModal,
+          model: modelInputModal,
+          brand: brandInputModal,
+          type: typeSelectModal,
+          size: sizeSelectModal,
+          price: priceInputModal,
+        };
+        console.log("bike : ", data);
+        this.controller.updateBike(data);
+      }
     }
     this.hideModal();
-  }
+  };
 
   hideModal() {
     const modal = document.getElementById("modal-container");
@@ -171,7 +213,7 @@ export default class View {
 
   fillFormModal(bike) {
     const titleModal = document.getElementById("modal-title");
-    titleModal.innerText = "Editer un vélo"
+    titleModal.innerText = "Editer un vélo";
     const modelInputModal = document.getElementById("modelModal");
     modelInputModal.value = bike.model;
     const brandInputModal = document.getElementById("brandModal");
@@ -187,12 +229,11 @@ export default class View {
     priceInputModal.value = bike.price;
     const idInputModal = document.getElementById("idModal");
     idInputModal.value = bike.id;
-
   }
 
   emptyFormModal() {
     const titleModal = document.getElementById("modal-title");
-    titleModal.innerText = "Ajouter un vélo"
+    titleModal.innerText = "Ajouter un vélo";
     const modelInputModal = document.getElementById("modelModal");
     modelInputModal.value = "";
     const brandInputModal = document.getElementById("brandModal");
@@ -214,7 +255,7 @@ export default class View {
     this.divRow.innerHTML = "";
   }
 
-   calcFilter(event) {
+  calcFilter(event) {
     event.preventDefault();
     console.log("clic filtrer");
     this.controller.calcFilter();
