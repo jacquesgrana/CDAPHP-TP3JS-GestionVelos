@@ -5,7 +5,11 @@ import { createMarkup } from "./utils/dom.js";
  */
 export default class View {
   selectType;
-  //modalMode;
+
+  /**
+   * Csontructeur (injection du controleur).
+   * @param {*} controller 
+   */
   constructor(controller) {
     this.controller = controller;
   }
@@ -44,10 +48,20 @@ export default class View {
   }
 
   /**
+   * Méthode qui affiche les vélos contenus dans le tableau 'bikes'.
+   * @param {[Bike]} bikes 
+   */
+  renderBikes = (bikes) => {
+    bikes.forEach((b) => {
+      this.renderBike(b);
+    });
+  }
+
+  /**
    * Méthode qui affiche un vélo
    * @param {Bike} b : Vélo à afficher.
    */
-  renderBike(b) {
+  renderBike = (b) => {
     const article = createMarkup("article", "", this.divRow, [
       { class: "col-lg-4 col-md-6 col-sm-12 p-2 card border-0 col-centered" },
       { style: "box-sizing: border-box" },
@@ -90,7 +104,7 @@ export default class View {
   }
 
   /**
-   * Méthode qui affiche un select des types.
+   * Méthode qui ajoute une option au select des types.
    * @param {String} t : type à afficher.
    */
   renderOptionSelectType(t) {
@@ -98,7 +112,7 @@ export default class View {
   }
 
   /**
-   * Méthode qui affiche un select des types pour la modale.
+   * Méthode qui ajoute une option au select des types pour la modale.
    * @param {String} t : type à afficher.
    */
   renderOptionSelectTypeModal(t) {
@@ -107,7 +121,7 @@ export default class View {
   }
 
   /**
-   * Méthode qui affiche un select des tailles pour la modale.
+   * Méthode qui ajoute une option au select des tailles pour la modale.
    * @param {String} s : taille à afficher.
    */
   renderOptionSelectSizeModal(s) {
@@ -253,7 +267,7 @@ export default class View {
   }
 
   /**
-   * Méthode qui remplie le formulaire de la modale avec les valeurs de bike.
+   * Méthode qui rempli le formulaire de la modale avec les valeurs de 'bike'.
    * @param {Bike} bike 
    */
   fillFormModal(bike) {
@@ -263,13 +277,10 @@ export default class View {
     modelInputModal.value = bike.model;
     const brandInputModal = document.getElementById("brandModal");
     brandInputModal.value = bike.brand;
-
     const typeSelectModal = document.getElementById("select-type");
     typeSelectModal.value = bike.type;
-
     const sizeSelectModal = document.getElementById("select-size");
     sizeSelectModal.value = bike.size;
-
     const priceInputModal = document.getElementById("priceModal");
     priceInputModal.value = bike.price;
     const idInputModal = document.getElementById("idModal");

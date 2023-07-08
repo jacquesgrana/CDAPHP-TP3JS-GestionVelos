@@ -54,8 +54,8 @@ export default class Model {
         this.#bikes = data;
         displayBikes(this.#bikes);
       })
-      .catch((err) => {
-        console.error("erreur attrapée :", err);
+      .catch((error) => {
+        console.error("Erreur :", error);
       });
   }
 
@@ -75,7 +75,7 @@ export default class Model {
         }
       })
       .catch((error) => {
-        console.error("Une erreur s'est produite lors de la suppression de l'élément:", error);
+        console.error("Erreur :", error);
       });
   }
 
@@ -96,7 +96,7 @@ export default class Model {
         this.getBikesFromServer(displayBikes);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Erreur :", error);
       });
   }
 
@@ -117,7 +117,7 @@ export default class Model {
         this.getBikesFromServer(displayBikes);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Erreur :", error);
       });
   }
 }
