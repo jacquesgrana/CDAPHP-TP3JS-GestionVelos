@@ -6,6 +6,8 @@ export default class Model {
   #types; // tableau des types de vélos.
   #sizes; // tableau des tailles de vélos.
 
+  #endPoint = "http://localhost:4250/bikes";
+
   constructor() {
     this.#bikes = [];
     this.#types = ["VTT", "VTC", "COURSE", "BMX", "CROSS"];
@@ -44,7 +46,7 @@ export default class Model {
    * @param {callback} displayBikes 
    */
   getBikesFromServer(displayBikes) {
-    fetch("http://localhost:3000/bikes", {
+    fetch(this.#endPoint, {
         method: "GET",
     })
       .then((res) => {
@@ -64,7 +66,7 @@ export default class Model {
    * @param {callback} displayBikes 
    */
   deleteBikeFromServer(id, displayBikes) {
-    fetch(`http://localhost:3000/bikes/${id}`, {
+    fetch(`${this.#endPoint}/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -84,7 +86,7 @@ export default class Model {
    * @param {callback} displayBikes 
    */
   addBikeFromServer(bikeToAdd, displayBikes) {
-    fetch("http://localhost:3000/bikes", {
+    fetch(this.#endPoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +107,7 @@ export default class Model {
    * @param {callback} displayBikes 
    */
   updateBikeFromServer(bikeToUpdate, displayBikes) {
-    fetch(`http://localhost:3000/bikes/${bikeToUpdate.id}`, {
+    fetch(`${this.#endPoint}/${bikeToUpdate.id}`, {
       method: "PUT", // or 'PATCH' for partial updates
       headers: {
         "Content-Type": "application/json",
