@@ -6,7 +6,7 @@ export default class Model {
   #types; // tableau des types de vélos.
   #sizes; // tableau des tailles de vélos.
 
-  #endPoint = "http://localhost:4250/bikes";
+  #endPoint = "https://tpjs-exo3-serveur-json-server.onrender.com/bikes"; //https://tpjs-exo3-serveur-json-server.onrender.com
 
   constructor() {
     this.#bikes = [];
