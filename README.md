@@ -2,6 +2,8 @@
 
 TP exo 3 - Examen Javascript - CDA PHP
 
+https://jacquesgrana.github.io/CDAPHP-TP3JS-GestionVelos/
+
 Exercice 3 – Créer un catalogue de vélos en ligne - 20pts
 
 L’objectif de cet exercice est de créer une application qui permet de créer, modifier, supprimer et
