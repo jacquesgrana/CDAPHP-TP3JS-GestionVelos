@@ -6,7 +6,10 @@ export default class Model {
   #types; // tableau des types de vélos.
   #sizes; // tableau des tailles de vélos.
 
-  #endPoint = "https://tpjs-exo3-serveur-json-server.onrender.com/bikes"; //https://tpjs-exo3-serveur-json-server.onrender.com
+  #endPoint = "https://tpjs-exo3-serveur-json-server.onrender.com/bikes"; //https://tpjs-exo3-serveur-json-server.onrender.com/bikes
+  //https://magical-elf-d6cdf3.netlify.app/fe72d06f-72c4-4df6-b601-62158565ae12/bikes
+  //https://magical-elf-d6cdf3.netlify.app/
+  //https://64bbdb5b05b8c967e0144d07--magical-elf-d6cdf3.netlify.app/bikes
 
   constructor() {
     this.#bikes = [];
